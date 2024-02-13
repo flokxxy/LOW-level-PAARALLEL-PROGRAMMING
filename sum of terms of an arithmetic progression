@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n; //кол-во членов прогрессии
+    int shag;
+    int first;
+    cin >> n >> shag >> first;
+   /* _asm {
+        mov EAX, first; Значение first сохраняется в регистре EA
+        mov EBX, shag; Значение shag сохраняется в регистре EBX
+        add EBX, -1; К значению EBX прибавляется - 1
+        mov ECX, n; Значение n сохраняется в регистре ECX
+        metka : add EAX, EBX
+        loop metka
+        mov first, EAX
+    }*/
+    _asm {
+        mov EAX, first
+        mov EBX, shag
+        add EBX, 0;
+        mov ECX, n
+        metka : add EAX, EBX
+        loop metka
+        mov first, EAX
+    }
+    cout << first;
+}
