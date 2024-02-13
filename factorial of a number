@@ -1,0 +1,17 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    int n1 = 1;
+    _asm {
+        mov ECX, n; ECX устанавливается в значение n.
+        mov BX, 1; BX устанавливается в 1.
+        mov EAX, 1; EAX устанавливается в 1.
+        metka:mul BX; выполняется умножение значения, хранящегося в регистре BX, на значение, хранящееся в регистре AX
+        add BX, 1; Увеличивает значение BX на 1
+        loop metka
+        mov n, EAX; Значение EAX сохраняется в переменной n.
+    }
+    cout << n; 
