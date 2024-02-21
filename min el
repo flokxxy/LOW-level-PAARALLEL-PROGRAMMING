@@ -1,0 +1,58 @@
+
+#include <iostream>
+
+using namespace std;
+int main() {
+	//int n;
+	//cout << "enter n";
+	//cin >> n;
+	int a[10];
+	int pos, r;
+	int min;
+	for (int i = 0; i < 10; i++) {
+		cin >> a[i];
+	}
+
+	_asm {
+		lea ebx, a; запись адреса
+		mov edx, [ebx]; записываем адрес эл - та
+		mov r, ebx
+		add ebx, 4; перехрдим к след эл - ту
+		mov ecx, 9; с учетом предыдущего э - та идкт у след
+		mov pos, ebx;
+		lea edx, a; перезаписываем адрес нашего 2ого эл-та из массива
+		sub pos, edx
+//в 24 строке что-то не так
+		Cicle:
+		cmp ecx, 0; запускаем цикл который закончится когда закончатся эл - ты
+			je CicleEnd; когда они заканчиваются переход на выход
+			//цикл который будет с
+			mov edx, [ebx]; записываем адрес эл - та
+			mov edx, r
+			jge leavee
+			mov edx, [ebx]; адрее - просто буква, [] - значение эл - та
+			mov pos, ebx
+			lea edx, a
+			sub pos, edx; находим позицию мин эл-та
+			leavee:
+		add ebx, 4
+			sub ecx,1
+			jmp Cicle
+
+			CicleEnd:
+		mov edx,0
+			mov eax, pos
+			mov ebx,4
+			div edx
+			mov pos ,eax
+
+
+
+
+
+
+		//add eax, [ebx]
+
+	}
+	cout << r<<" "<<pos;
+}
