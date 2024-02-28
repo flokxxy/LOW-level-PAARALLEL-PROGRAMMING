@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	/*
+	int n;
+	cin >> n;
+	int a[100][100];
+	int b[100][100];
+	int res[100][100];
+	cout << "ввод первой матрицы ";
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> a[i][j];
+		}
+	}
+	cout << "ввод второй матрицы ";
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> b[i][j];
+		}
+	}*/
+
+	int a[2][2] = { {2,1},{2,1} };
+	int b[2][2] = { {2,1},{2,1} };
+	int res[2][2];
+
+	// произведение двух матриц: 
+	_asm {
+
+		mov ecx, 0
+		mov eax, 0
+		L1:
+		mov ebx, 0
+			mov edx, 0
+			L2:
+			mov esi,a[ecx*4][edx*4]
+			mov edi, b[edx*4][ecx*4]
+			imul esi,edi
+			add ebx,esi
+			inc edx
+			cmp edx, 2
+			jl L2
+			mov res[ecx*4][ecx*4]
+			inc ecx
+			cmp ecx, 2
+			jl L1
+
+
+		
+
+
+	}
+
+	cout <<" произведение матриц ";
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 2; j++) {
+			cout << res[i][j] << " ";
+		}
+	}
+
+}
