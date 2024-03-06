@@ -1,0 +1,58 @@
+#include <iostream>
+
+using namespace std;
+/* не то
+int pow(int a, int b) {
+	int res = 1;
+	while (b > 0) {
+		if (b & 1) {
+			_asm {
+				mov eax, res
+				imul eax, a
+				mov res, eax
+			}
+		}
+		_asm {
+			mov eax ,a
+			imul eax, a
+			mov a, eax
+		}
+		b >>= 1;
+	}
+	return res;
+
+}*/
+
+
+int main() {
+	unsigned long n,c;
+	unsigned long result;
+	cout << "enter date ";
+	cin >> n;
+	cout << "enter extent ";
+	cin >> c;
+
+	//cout << "result = " << pow(n, c);
+	
+
+
+
+	
+	_asm { //обычное возведение в степень
+		//надо использовать команды работы с битами => не то
+		mov eax, n
+		
+		//mov cl,c
+		//shl eax, cl
+		mov ebx, c
+		dec ebx
+		cycle:
+		mul n
+			dec ebx
+			jnz cycle
+
+			mov result, eax
+	}
+	cout << endl << result;
+	
+}
