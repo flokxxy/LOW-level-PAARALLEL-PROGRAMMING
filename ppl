@@ -38,7 +38,10 @@ int** multiplyMatrixPPA(int** matrix1, int** matrix2, size_t size) {
 
 int main() {
     // Создание двух квадратных матриц
-    const size_t size = 1000;
+cout<<"enter n";
+    int n; cin >> n;
+    long size = n;
+   
     int** matrix1 = new int* [size];
     int** matrix2 = new int* [size];
     for (size_t i = 0; i < size; ++i) {
