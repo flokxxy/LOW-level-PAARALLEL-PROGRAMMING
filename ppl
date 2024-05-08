@@ -1,0 +1,78 @@
+#include <iostream>
+#include <chrono>
+#include <numeric>
+#include <ppl.h>
+
+using namespace std;
+using namespace concurrency;
+
+// Функция для перемножения матриц в обычном виде
+int** multiplyMatrix(int** matrix1, int** matrix2, size_t size) {
+    int** result = new int*[size];
+    for (size_t i = 0; i < size; ++i) {
+        result[i] = new int[size]();
+        for (size_t j = 0; j < size; ++j) {
+            for (size_t k = 0; k < size; ++k) {
+                result[i][j] += matrix1[i][k] * matrix2[k][j];
+            }
+        }
+    }
+    return result;
+}
+
+// Функция для перемножения матриц с использованием шаблонов PPA
+int** multiplyMatrixPPA(int** matrix1, int** matrix2, size_t size) {
+    int** result = new int*[size];
+    for (size_t i = 0; i < size; ++i) {
+        result[i] = new int[size]();
+    }
+    parallel_for(size_t(0), size, [&](size_t i) {
+        for (size_t j = 0; j < size; ++j) {
+            for (size_t k = 0; k < size; ++k) {
+                result[i][j] += matrix1[i][k] * matrix2[k][j];
+            }
+        }
+    });
+    return result;
+}
+
+int main() {
+    // Создание двух квадратных матриц
+    const size_t size = 1000;
+    int** matrix1 = new int*[size];
+    int** matrix2 = new int*[size];
+    for (size_t i = 0; i < size; ++i) {
+        matrix1[i] = new int[size]();
+        matrix2[i] = new int[size]();
+        for (size_t j = 0; j < size; ++j) {
+            matrix1[i][j] = 1;
+            matrix2[i][j] = 2;
+        }
+    }
+
+    // Перемножение матриц в обычном виде
+    auto start_time = chrono::steady_clock::now();
+    int** result = multiplyMatrix(matrix1, matrix2, size);
+    auto end_time = chrono::steady_clock::now();
+    cout << "Время выполнения перемножения матриц в обычном виде: " << chrono::duration<double>(end_time - start_time).count() << " секунд" << endl;
+
+    // Перемножение матриц с использованием шаблонов PPA
+    start_time = chrono::steady_clock::now();
+    int** resultPPA = multiplyMatrixPPA(matrix1, matrix2, size);
+    end_time = chrono::steady_clock::now();
+    cout << "Время выполнения перемножения матриц с использованием шаблонов PPA: " << chrono::duration<double>(end_time - start_time).count() << " секунд" << endl;
+
+    // Освобождение памяти
+    for (size_t i = 0; i < size; ++i) {
+        delete[] matrix1[i];
+        delete[] matrix2[i];
+        delete[] result[i];
+        delete[] resultPPA[i];
+    }
+    delete[] matrix1;
+    delete[] matrix2;
+    delete[] result;
+    delete[] resultPPA;
+
+    return 0;
+}
