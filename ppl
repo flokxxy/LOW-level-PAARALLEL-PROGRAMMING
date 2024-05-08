@@ -8,7 +8,7 @@ using namespace concurrency;
 
 // Функция для перемножения матриц в обычном виде
 int** multiplyMatrix(int** matrix1, int** matrix2, size_t size) {
-    int** result = new int*[size];
+    int** result = new int* [size];
     for (size_t i = 0; i < size; ++i) {
         result[i] = new int[size]();
         for (size_t j = 0; j < size; ++j) {
@@ -22,7 +22,7 @@ int** multiplyMatrix(int** matrix1, int** matrix2, size_t size) {
 
 // Функция для перемножения матриц с использованием шаблонов PPA
 int** multiplyMatrixPPA(int** matrix1, int** matrix2, size_t size) {
-    int** result = new int*[size];
+    int** result = new int* [size];
     for (size_t i = 0; i < size; ++i) {
         result[i] = new int[size]();
     }
@@ -32,15 +32,15 @@ int** multiplyMatrixPPA(int** matrix1, int** matrix2, size_t size) {
                 result[i][j] += matrix1[i][k] * matrix2[k][j];
             }
         }
-    });
+        });
     return result;
 }
 
 int main() {
     // Создание двух квадратных матриц
     const size_t size = 1000;
-    int** matrix1 = new int*[size];
-    int** matrix2 = new int*[size];
+    int** matrix1 = new int* [size];
+    int** matrix2 = new int* [size];
     for (size_t i = 0; i < size; ++i) {
         matrix1[i] = new int[size]();
         matrix2[i] = new int[size]();
@@ -54,13 +54,13 @@ int main() {
     auto start_time = chrono::steady_clock::now();
     int** result = multiplyMatrix(matrix1, matrix2, size);
     auto end_time = chrono::steady_clock::now();
-    cout << "Время выполнения перемножения матриц в обычном виде: " << chrono::duration<double>(end_time - start_time).count() << " секунд" << endl;
+    cout << "baase: " << chrono::duration<double>(end_time - start_time).count() << " sec" << endl;
 
     // Перемножение матриц с использованием шаблонов PPA
     start_time = chrono::steady_clock::now();
     int** resultPPA = multiplyMatrixPPA(matrix1, matrix2, size);
     end_time = chrono::steady_clock::now();
-    cout << "Время выполнения перемножения матриц с использованием шаблонов PPA: " << chrono::duration<double>(end_time - start_time).count() << " секунд" << endl;
+    cout << "ppa: " << chrono::duration<double>(end_time - start_time).count() << " sec" << endl;
 
     // Освобождение памяти
     for (size_t i = 0; i < size; ++i) {
